@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -15,6 +17,28 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // API routes
 app.use("/api", compileRoutes);
+
+// ─── Anthropic Proxy Route ───────────────────────────────────────────────────
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || "sk-ant-YOUR_KEY_HERE";
+
+app.post("/explain", async (req, res, next) => {
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify(req.body),
+    });
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+});
+// ─────────────────────────────────────────────────────────────────────────────
 
 // Home route
 app.get("/", (req, res) => {

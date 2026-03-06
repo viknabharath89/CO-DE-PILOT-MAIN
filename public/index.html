@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <title>AI Code Studio</title>
 
@@ -19,28 +20,25 @@
 
 <div id="leftPanel">
 
-<div class="logo">AI Code Studio</div>
+<div class="logo">❄️ CO(DE) PILOT</div>
 
 <div class="aiCard">
 <h3>Generate Code</h3>
 <p>Create starter code using AI.</p>
-<a href="https://code-an.onrender.com/" target="_blank">
-    <button type="button">CO(DE) PILOT</button>
+
+<a href="https://code-an.onrender.com/" class="page-link">
+<button type="button">CO(DE) PILOT</button>
 </a>
 
 </div>
 
 <div class="aiCard">
-<h3>Explain Code</h3>
+<button class="aiBtn" onclick="openExplain()">Explain</button>
 <p>Understand your program easily.</p>
-<button class="aiBtn">Explain</button>
+
 </div>
 
-<div class="aiCard">
-<h3>Fix Errors</h3>
-<p>Automatically debug your code.</p>
-<button class="aiBtn">Fix</button>
-</div>
+
 
 <div class="tips">
 <h3>Tips</h3>
@@ -77,7 +75,6 @@
 <div id="filename">main.js</div>
 
 <!-- MONACO EDITOR -->
-
 <div id="editor"></div>
 
 <div class="ioPanel">
@@ -98,6 +95,7 @@
 
 </div>
 
+<!-- ONLY ONE SCRIPT HERE -->
 <script src="script.js"></script>
 
 </body>
