@@ -6,19 +6,38 @@ const compileRoutes = require("./routes/compileRoutes");
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname,"public")));
+// Static files
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api",compileRoutes);
+// API routes
+app.use("/api", compileRoutes);
 
-app.get("/",(req,res)=>{
-res.sendFile(path.join(__dirname,"public","index.html"));
+// Home route
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-const PORT = 5000;
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error("Server Error:", err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
-app.listen(PORT,()=>{
-console.log(`🚀 Server running at http://localhost:${PORT}`);
+// Prevent server crash
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled Rejection:", err);
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
